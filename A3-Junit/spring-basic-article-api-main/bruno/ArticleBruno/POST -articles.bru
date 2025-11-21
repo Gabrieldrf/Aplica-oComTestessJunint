@@ -1,0 +1,45 @@
+meta {
+  name: POST /articles
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseURL}}/articles
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "noticia",
+    "description": "acontecimento urgente",
+    "body": "tal coisa aconteceu, saiba por que",
+    "tags": ["breaking news", "aterrorizante"]
+  }
+  
+}
+
+tests {
+  test("deve criar noticia com status 201 e campos especificados corretos", function () {
+    expect(res.getStatus()).to.equal(201);
+    const body = res.getBody();
+    expect(body).to.have.property("id");
+    expect(body).to.have.property("title");
+    expect(body).to.have.property("description");
+    expect(body).to.have.property("body");
+    expect(body).to.have.property("tags");
+    expect(body.title).to.equal("noticia");
+    expect(body.description).to.equal("acontecimento urgente");
+  });
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

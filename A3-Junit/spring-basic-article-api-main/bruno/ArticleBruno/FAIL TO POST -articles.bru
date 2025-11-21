@@ -1,0 +1,35 @@
+meta {
+  name: FAIL TO POST /articles
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseURL}}/articles
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "description": "acontecimento urgente",
+    "body": "tal coisa aconteceu, saiba por que",
+    "tags": ["breaking news", "aterrorizante"]
+  }
+}
+
+tests {
+  test("deve retornar erro 400 e não criar artigo por enviar nao possuir o campo obrigatorio 'title'", function () {
+    expect(res.getStatus()).to.equal(400);
+  });
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

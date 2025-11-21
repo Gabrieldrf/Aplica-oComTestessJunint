@@ -1,0 +1,38 @@
+meta {
+  name: POST /users
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseURL}}/users
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "bruno",
+    "email": "bruno@email.com",
+    "password": "123456"
+  }
+}
+
+tests {
+  test("deve retornar código 200 para o usuário criado com sucesso", function () {
+    expect(res.getStatus()).to.equal(200);
+    const body = res.getBody();
+    expect(body).to.have.property("id");
+    expect(body.username).to.equal("bruno");
+  });
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

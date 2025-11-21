@@ -1,0 +1,26 @@
+meta {
+  name: GET /users by id
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseURL}}/users/1
+  body: none
+  auth: inherit
+}
+
+tests {
+  test("deve retornar usuário com ID especificado", function () {
+    expect(res.getStatus()).to.equal(200);
+    const body = res.getBody();
+    expect(body).to.have.property("id");
+    expect(body.id).to.equal(1);
+  });
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
